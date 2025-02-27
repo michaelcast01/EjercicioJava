@@ -27,26 +27,26 @@ public class Main {
                         System.out.println("Su nuevo saldo es: $" + saldo);
                     } else {
                         System.out.println("Cantidad inválida.");
-                            }
-                        }
-                        case 3 -> {System.out.print("Cantidad a retirar: ");
-                            int retiro = scanner.nextInt();
-                            if (retiro <= 0) {
-                                System.out.println("Cantidad inválida.");
-                            } else if (retiro > saldo) {
-                                System.out.println("Saldo insuficiente.");
-                            } else {
-                                saldo -= retiro;
-                                System.out.println("Su nuevo saldo es: $" + saldo);}
-                        }
-                        case 4 -> {
-                            System.out.println("Gracias por vistarnos.");
-                        }
-                        default -> {
-                            System.out.println("Opción inválida. Intente nuevamente.");
-                        }
                     }
-                } while (opcion != 4);
-                scanner.close();
+                }
+                case 3 -> {System.out.print("Cantidad a retirar: ");
+                    int retiro = scanner.nextInt();
+                    if (retiro <= 0) {
+                        System.out.println("Cantidad inválida.");
+                    } else if (retiro > saldo) {
+                        System.out.println("Saldo insuficiente.");
+                    } else {
+                        saldo -= retiro;
+                        System.out.println("Su nuevo saldo es: $" + saldo);}
+                }
+                case 4 -> {
+                    System.out.println("Gracias por vistarnos.");
+                }
+                default -> {
+                    System.out.println("Opción inválida. Intente nuevamente.");
+                }
             }
-        }
+        } while (opcion != 4);
+        scanner.close();
+    }
+}
