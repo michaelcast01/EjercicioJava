@@ -2,84 +2,65 @@ package org.example;
 import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner lector = new Scanner(System.in);
+        boolean activo = true;
+        while (activo) {
 
-        // Solicitar dinero al usuario
-        System.out.print("Ingrese la cantidad de dinero disponible: ");
-        double dinero = sc.nextDouble();
-        sc.nextLine();
+            // Menú principal
+            System.out.println("\nTEMPERATURA (Solo C, F, K)");
+            System.out.println("1. Fahrenheit a Celsius");
+            System.out.println("2. Celsius a Fahrenheit");
+            System.out.println("3. Celsius a Kelvin");
+            System.out.println("4. Kelvin a Celsius");
+            System.out.println("5. Fahrenheit a Kelvin");
+            System.out.println("6. Kelvin a Fahrenheit");
+            System.out.println("7. Salir");
+            System.out.print("Seleccione una opción: ");
 
-        int comprasRealizadas = 0;
-        boolean seguirComprando = true;
-
-        while (seguirComprando && comprasRealizadas < 5) {
-            // Mostrar menú
-            System.out.println("\n===== PRODUCTOS DISPONIBLES =====");
-            System.out.println("1. Galletas - $1000");
-            System.out.println("2. Gomas - $2500");
-            System.out.println("3. Chocolatinas - $1500");
-            System.out.println("4. Cereal - $2800");
-            System.out.println("5. SpeedMax - $2000");
-            System.out.println("6. Salir");
-            // Seleccione
-            System.out.print("\nSeleccione un producto (número): ");
-            int opcion = sc.nextInt();
-            sc.nextLine();
-
-            switch (opcion) {
+            int eleccion = lector.nextInt();
+            switch (eleccion) {
                 case 1 -> {
-                    if (dinero >= 1000) {
-                        dinero -= 1000;
-                        System.out.println("Compró Galletas por $1000");
-                        comprasRealizadas++;
-                    } else {
-                        System.out.println("No tiene suficiente dinero para Galletas.");
-                    }
+                    System.out.print("Ingrese temperatura en Fahrenheit: ");
+                    double fah = lector.nextDouble();
+                    double cel = (5.0 / 9.0) * (fah - 32);
+                    System.out.println(fah + "°F equivale a " + cel + "°C");
                 }
                 case 2 -> {
-                    if (dinero >= 2500) {
-                        dinero -= 2500;
-                        System.out.println("Compró Gomas por $2500");
-                        comprasRealizadas++;
-                    } else {
-                        System.out.println("No tiene suficiente dinero para Gomas.");
-                    }
+                    System.out.print("Ingrese temperatura en Celsius: ");
+                    double cEn = lector.nextDouble();
+                    double fRes = (9.0 / 5.0) * cEn + 32;
+                    System.out.println(cEn + "°C equivale a " + fRes + "°F");
                 }
                 case 3 -> {
-                    if (dinero >= 1500) {
-                        dinero -= 1500;
-                        System.out.println("Compró Chocolatinas por $1500");
-                        comprasRealizadas++;
-                    } else {
-                        System.out.println("No tiene suficiente dinero para Chocolatinas.");
-                    }
+                    System.out.print("Ingrese temperatura en Celsius: ");
+                    double cK = lector.nextDouble();
+                    double kRes1 = cK + 273.15;
+                    System.out.println(cK + "°C equivale a " + kRes1 + " K");
                 }
                 case 4 -> {
-                    if (dinero >= 2800) {
-                        dinero -= 2800;
-                        System.out.println("Compró Cereal por $2800");
-                        comprasRealizadas++;
-                    } else {
-                        System.out.println("No tiene suficiente dinero para Cereal.");
-                    }
+                    System.out.print("Ingrese temperatura en Kelvin: ");
+                    double kel1 = lector.nextDouble();
+                    double cRes = kel1 - 273.15;
+                    System.out.println(kel1 + " K equivale a " + cRes + "°C");
                 }
                 case 5 -> {
-                    if (dinero >= 2000) {
-                        dinero -= 2000;
-                        System.out.println("Compró SpeedMax por $2000");
-                        comprasRealizadas++;
-                    } else {
-                        System.out.println("No tiene suficiente dinero para SpeedMax.");
-                    }
+                    System.out.print("Ingrese temperatura en Fahrenheit: ");
+                    double fahK = lector.nextDouble();
+                    double kRes2 = (5.0 / 9.0) * (fahK - 32) + 273.15;
+                    System.out.println(fahK + "°F equivale a " + kRes2 + " K");
                 }
-                case 6 -> seguirComprando = false;
-                default -> System.out.println("Opción inválida. Intente nuevamente.");
+                case 6 -> {
+                    System.out.print("Ingrese temperatura en Kelvin: ");
+                    double kel2 = lector.nextDouble();
+                    double fKel = (9.0 / 5.0) * (kel2 - 273.15) + 32;
+                    System.out.println(kel2 + " K equivale a " + fKel + "°F");
+                    }
+                case 7 -> {System.out.println("Saliendo del conversor...");
+                    activo = false;
+                }
+                default -> System.out.println("Opción no válida. Intente nuevamente.");
             }
-            // Mostrar dinero restante
-            System.out.println("Dinero restante: $" + String.format("%.2f", dinero));
         }
-        // Mensaje final
-        System.out.println("\nGracias por su compra. Su cambio es: $" + String.format("%.2f", dinero));
-        sc.close();
+        lector.close();
     }
 }
