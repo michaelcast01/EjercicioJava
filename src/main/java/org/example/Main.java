@@ -1,66 +1,39 @@
 package org.example;
-import java.util.Scanner;
-public class Main {
-    public static void main(String[] args) {
-        Scanner lector = new Scanner(System.in);
-        boolean activo = true;
-        while (activo) {
+import java.util.Random;
 
-            // Menú principal
-            System.out.println("\nTEMPERATURA (Solo C, F, K)");
-            System.out.println("1. Fahrenheit a Celsius");
-            System.out.println("2. Celsius a Fahrenheit");
-            System.out.println("3. Celsius a Kelvin");
-            System.out.println("4. Kelvin a Celsius");
-            System.out.println("5. Fahrenheit a Kelvin");
-            System.out.println("6. Kelvin a Fahrenheit");
-            System.out.println("7. Salir");
-            System.out.print("Seleccione una opción: ");
+        public class Main {
+            public static void main(String[] args) {
+                int win1 = 0;
+                int win2 = 0;
+                int aleatorio1, aleatorio2;
+                Random random = new Random();
 
-            int eleccion = lector.nextInt();
-            switch (eleccion) {
-                case 1 -> {
-                    System.out.print("Ingrese temperatura en Fahrenheit: ");
-                    double fah = lector.nextDouble();
-                    double cel = (5.0 / 9.0) * (fah - 32);
-                    System.out.println(fah + "°F equivale a " + cel + "°C");
-                }
-                case 2 -> {
-                    System.out.print("Ingrese temperatura en Celsius: ");
-                    double cEn = lector.nextDouble();
-                    double fRes = (9.0 / 5.0) * cEn + 32;
-                    System.out.println(cEn + "°C equivale a " + fRes + "°F");
-                }
-                case 3 -> {
-                    System.out.print("Ingrese temperatura en Celsius: ");
-                    double cK = lector.nextDouble();
-                    double kRes1 = cK + 273.15;
-                    System.out.println(cK + "°C equivale a " + kRes1 + " K");
-                }
-                case 4 -> {
-                    System.out.print("Ingrese temperatura en Kelvin: ");
-                    double kel1 = lector.nextDouble();
-                    double cRes = kel1 - 273.15;
-                    System.out.println(kel1 + " K equivale a " + cRes + "°C");
-                }
-                case 5 -> {
-                    System.out.print("Ingrese temperatura en Fahrenheit: ");
-                    double fahK = lector.nextDouble();
-                    double kRes2 = (5.0 / 9.0) * (fahK - 32) + 273.15;
-                    System.out.println(fahK + "°F equivale a " + kRes2 + " K");
-                }
-                case 6 -> {
-                    System.out.print("Ingrese temperatura en Kelvin: ");
-                    double kel2 = lector.nextDouble();
-                    double fKel = (9.0 / 5.0) * (kel2 - 273.15) + 32;
-                    System.out.println(kel2 + " K equivale a " + fKel + "°F");
+                while (win1 < 2 && win2 < 2) {
+
+                    aleatorio1 = random.nextInt(3);
+                    aleatorio2 = random.nextInt(3);
+
+                    // Se evalúa solo si no hay empate (único if permitido)
+                    if (aleatorio1 != aleatorio2) {
+                        // Si se cumple alguna de las condiciones que hacen ganar a Jugador1:
+                        // Piedra (0) vence a Tijera (2)
+                        // Papel (1) vence a Piedra (0)
+                        // Tijera (2) vence a Papel (1)
+                        win1 += ((aleatorio1 == 0 && aleatorio2 == 2) ||
+                                (aleatorio1 == 1 && aleatorio2 == 0) ||
+                                (aleatorio1 == 2 && aleatorio2 == 1)) ? 1 : 0;
+
+                        // Si Jugador1 no gana, gana Jugador2
+                        win2 += ((aleatorio1 == 0 && aleatorio2 == 2) ||
+                                (aleatorio1 == 1 && aleatorio2 == 0) ||
+                                (aleatorio1 == 2 && aleatorio2 == 1)) ? 0 : 1;
                     }
-                case 7 -> {System.out.println("Saliendo del conversor...");
-                    activo = false;
+
+                    System.out.println("Jugador1: " + (aleatorio1 == 0 ? "Piedra" : aleatorio1 == 1 ? "Papel" : "Tijera")
+                            + " | Jugador2: " + (aleatorio2 == 0 ? "Piedra" : aleatorio2 == 1 ? "Papel" : "Tijera")
+                            + " => Marcador: " + win1 + " - " + win2);
                 }
-                default -> System.out.println("Opción no válida. Intente nuevamente.");
+
+                System.out.println("Ganador: " + (win1 == 2 ? "Jugador1" : "Jugador2"));
             }
         }
-        lector.close();
-    }
-}
