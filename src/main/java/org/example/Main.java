@@ -1,39 +1,53 @@
 package org.example;
-import java.util.Random;
-
-        public class Main {
-            public static void main(String[] args) {
-                int win1 = 0;
-                int win2 = 0;
-                int aleatorio1, aleatorio2;
-                Random random = new Random();
-
-                while (win1 < 2 && win2 < 2) {
-
-                    aleatorio1 = random.nextInt(3);
-                    aleatorio2 = random.nextInt(3);
-
-                    // Se evalúa solo si no hay empate (único if permitido)
-                    if (aleatorio1 != aleatorio2) {
-                        // Si se cumple alguna de las condiciones que hacen ganar a Jugador1:
-                        // Piedra (0) vence a Tijera (2)
-                        // Papel (1) vence a Piedra (0)
-                        // Tijera (2) vence a Papel (1)
-                        win1 += ((aleatorio1 == 0 && aleatorio2 == 2) ||
-                                (aleatorio1 == 1 && aleatorio2 == 0) ||
-                                (aleatorio1 == 2 && aleatorio2 == 1)) ? 1 : 0;
-
-                        // Si Jugador1 no gana, gana Jugador2
-                        win2 += ((aleatorio1 == 0 && aleatorio2 == 2) ||
-                                (aleatorio1 == 1 && aleatorio2 == 0) ||
-                                (aleatorio1 == 2 && aleatorio2 == 1)) ? 0 : 1;
-                    }
-
-                    System.out.println("Jugador1: " + (aleatorio1 == 0 ? "Piedra" : aleatorio1 == 1 ? "Papel" : "Tijera")
-                            + " | Jugador2: " + (aleatorio2 == 0 ? "Piedra" : aleatorio2 == 1 ? "Papel" : "Tijera")
-                            + " => Marcador: " + win1 + " - " + win2);
-                }
-
-                System.out.println("Ganador: " + (win1 == 2 ? "Jugador1" : "Jugador2"));
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Ingrese el tipo del Pokémon atacante (Agua, Fuego, Planta o Eléctrico): ");
+        String tipoAtaque = input.nextLine();
+        System.out.print("Ingrese el tipo del Pokémon defensor (Agua, Fuego, Planta o Eléctrico): ");
+        String tipoDefensa = input.nextLine();
+        System.out.print("Ingrese el valor de ataque (1-100): ");
+        int valorAtk = input.nextInt();
+        System.out.print("Ingrese el valor de defensa (1-100): ");
+        int valorDef = input.nextInt();
+        // Validar entradas
+        if (valorAtk < 1 || valorAtk > 100 || valorDef < 1 || valorDef > 100) {
+            System.out.println("Error: Los valores de ataque y defensa deben estar entre 1 y 100.");
+            return;
+        }
+        double efec = obtenerEfectividad(tipoAtaque, tipoDefensa);
+        double damage = 50 * ((double) valorAtk / valorDef) * efec;
+        System.out.println("El daño causado es: " + damage);
+        if (efec == 2.0) {
+            System.out.println("¡Es super efectivo!");
+        } else if (efec == 0.5) {
+            System.out.println("No es muy efectivo...");
+        } else {
+            System.out.println("Efectividad neutral.");
+        }
+        input.close();
+    }
+    static double obtenerEfectividad(String atq, String def) {
+        // def.equals compara el contenido de dos cadenas respetando mayúsculas y minúsculas.
+        switch (atq) {
+            case "agua" -> {
+                if (def.equals("fuego")) return 2.0;
+                if (def.equals("agua") || def.equals("planta")) return 0.5;
+            }
+            case "fuego" -> {
+                if (def.equals("planta")) return 2.0;
+                if (def.equals("agua") || def.equals("fuego")) return 0.5;
+            }
+            case "planta" -> {
+                if (def.equals("agua")) return 2.0;
+                if (def.equals("fuego") || def.equals("planta")) return 0.5;
+            }
+            case "eléctrico" -> {
+                if (def.equals("agua")) return 2.0;
+                if (def.equals("planta") || def.equals("eléctrico")) return 0.5;
             }
         }
+        return 1.0; // Efectividad neutral si no se cumple ninguna condición
+    }
+}
